@@ -1,0 +1,43 @@
+<div class="content">
+  <div class="main">
+    <ul *ngIf="specials" class="pizza-cards">
+      <li *ngFor="let special of specials" (click)="addToOrder(special.id)" [style.background-image]="getBackground(special.imageUrl)">
+
+        <!--ng-click="myFunc()"-->
+        <div class="pizza-info">
+          <span class="title">{{special.name}}</span>
+          {{special.description}}
+          <span class="price">{{special.basePrice}}</span>
+        </div>
+
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidebar">
+
+    <div *ngIf="isActive; else emptycart" class="order-contents">
+      <h2>Your order</h2>
+      <div  *ngIf="selectedOrder">
+        <div *ngFor="let special of selectedOrder" class="cart-item">
+          <a (click)="removeItem(special.id,special.basePrice)" class="delete-item">x</a>
+          <div class="title"> {{ special.name }}</div>
+          <div class="item-price">{{ special.basePrice | number:'1.2-5' }}</div>
+        </div>
+      </div>
+    </div>
+    <ng-template #emptycart>
+      <div class="empty-cart">Choose a pizza<br>to get started</div>
+    </ng-template>
+
+
+
+    <div class="order-total">
+      Total:
+      <span class="total-price">{{totalPrice | number:'1.2-5'}}</span>
+      <a [routerLink]="['/checkout']" class="btn btn-warning" (click)="placeorder()">
+        Order >
+      </a>
+    </div>
+  </div>
+</div>

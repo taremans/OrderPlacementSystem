@@ -1,0 +1,45 @@
+<div class="content">
+  <div class="main">
+
+    <div  *ngIf="orderedItems.length; else empty" class="text-center font-weight-bold p-3 m-5 checkout">
+      <p>We recieved your order</p>
+      <p class="text-uppercase"> Your order will be ready soon</p>
+      <p>Thank you</p>
+
+    </div>
+
+    <ng-template #empty>
+      <div class="empty-cart">Please Choose a pizza<br>to get started</div>
+    </ng-template>
+  </div>
+  <div class="sidebar">
+    <div *ngIf="orderedItems; else emptycart" class="order-contents">
+      <h2>Your order</h2>
+      <div *ngIf="orderedItems">
+        <div *ngFor="let special of orderedItems" class="cart-item">
+         
+          <div class="title"> {{ special.name }}</div>
+          <div class="item-price">{{ special.basePrice | number:'1.2-5' }}</div>
+        </div>
+      </div>
+    </div>
+    <ng-template #emptycart>
+      <div class="empty-cart">Choose a pizza<br>to get started</div>
+    </ng-template>
+
+    <div class="order-total" *ngIf="orderedItems.length; else returnT">
+
+      <a  class="btn btn-warning" (click)="placeOrder()">
+        Place Order >
+      </a>
+    </div>
+    <ng-template #returnT>
+      <div class="order-total" >
+
+        <a [routerLink]="['/']" class="btn btn-warning">
+          Return >
+        </a>
+      </div>
+    </ng-template>
+  </div>
+</div>
